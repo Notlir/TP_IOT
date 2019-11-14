@@ -1,8 +1,10 @@
 import pandas as pandas
 from numpy import dstack
 from numpy import vstack
+from numpy import isclose
 from pandas import read_csv
 from pandas import DataFrame
+import math
 
 def load_file(filepath):
 	dataframe = read_csv(filepath, header=None, delim_whitespace=True)
@@ -30,11 +32,19 @@ def verif(data):
 	dFrame = DataFrame(data)
 	counts = dFrame.groupby(0).size()
 	counts = counts.values
+	percentage = [0] * len(counts)
 	for i in range(len(counts)):
-		percent = counts[i] / len(dFrame) * 100
-		print('Activity = %d, Total = %d, Percentage = %.3f' % (i+1, counts[i], percent))
+		percentage[i] = '{0:.3f}'.format(counts[i] / len(dFrame) * 100)
+	#	percent = counts[i] / len(dFrame) * 100
+	#	#print('Activity = %d, Total = %d, Percentage = %.3f' % (i+1, counts[i], percent)
+	return percentage
 
-
+def verif_auto(data_train, data_test, data_all):
+	for i in range(len(data_all)):
+		if(not(isclose(float(data_train[i]),float(data_test[i]),1)) and not(isclose(float(data_test[i]),float(data_all[i]),1))):
+			exit()
+	print("Jeu de donnée cohérent")
+	
 print("Exemple pour lire une fichier : load_file(chemin du fichier)")
 data = load_file('UCI HAR Dataset/train/Inertial Signals/total_acc_y_train.txt')
 print(data.shape)
@@ -54,11 +64,9 @@ print(testX.shape, testy.shape)
 
 print("Verification du jeu de donnée")
 train_Y = load_file('UCI HAR Dataset//train/y_train.txt')
-print('Train Y Dataset')
-verif(train_Y)
+train =verif(train_Y)
 test_Y = load_file('UCI HAR Dataset//test/y_test.txt')
-print('Test Y Dataset')
-verif(test_Y)
-print('Both')
+test = verif(test_Y)
 combined = vstack((train_Y, test_Y))
-verif(combined)
+all = verif(combined)
+verif_auto(train, test, all)
