@@ -17,7 +17,7 @@ def load_groupfiles(files, path=''):
 def load_data(data_files, path=''):
 	filepath = path + data_files + '/Inertial Signals/'
 	files = list()
-	files += ['total_acc_x_' + data_files + '.txt', 'total_acc_y_' + data_files + '.txt' + 'total_acc_z_' + data_files + '.txt']
+	files += ['total_acc_x_' + data_files + '.txt', 'total_acc_y_' + data_files + '.txt', 'total_acc_z_' + data_files + '.txt']
 	files += ['body_acc_x_' + data_files + '.txt', 'body_acc_y_' + data_files + '.txt', 'body_acc_z_' + data_files + '.txt']
 	files += ['body_gyro_x_' + data_files + '.txt', 'body_gyro_y_' + data_files + '.txt', 'body_gyro_z_' + data_files + '.txt']
 	group_file = load_groupfiles(files, filepath)
@@ -34,7 +34,9 @@ total_acc = load_groupfiles(files, path='UCI HAR Dataset/train/Inertial Signals/
 print(total_acc.shape)
 
 print("Exemple pour lire les données")
-trainX, trainy = load_data('train', 'HARDataset/')
+print("Data train")
+trainX, trainy = load_data('train', 'UCI HAR Dataset/')
 print(trainX.shape, trainy.shape)
-testX, testy = load_data('test', 'HARDataset/')
+print("Data test")
+testX, testy = load_data('test', 'UCI HAR Dataset/')
 print(testX.shape, testy.shape)
