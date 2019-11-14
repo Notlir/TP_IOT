@@ -1,0 +1,11 @@
+import pandas as pandas
+# load dataset
+from pandas import read_csv
+
+# load a single file as a numpy array
+def load_file(filepath):
+	dataframe = read_csv(filepath, header=None, delim_whitespace=True)
+	return dataframe.values
+
+data = load_file('UCI HAR Dataset/train/Inertial Signals/total_acc_y_train.txt')
+print(data.shape)
